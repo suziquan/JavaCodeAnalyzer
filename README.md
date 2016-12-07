@@ -21,7 +21,7 @@
 			<dependency>
 				<groupId>edu.nju</groupId>
 				<artifactId>JavaCodeAnalyzer</artifactId>
-				<version>1.1.0-SNAPSHOT</version>
+				<version>1.2.0</version>
 			</dependency>
 		</dependencies>
 ####1.3 下载JavaDoc和源代码####
