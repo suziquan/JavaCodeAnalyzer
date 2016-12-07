@@ -38,9 +38,8 @@ public class CodeAnalyzer {
 	
 	public CodeAnalyzer() {
 		classPath = CodeAnalyzer.class.getClassLoader().getResource("lib/rt.jar").getPath();
-
+		
 		parser = ASTParser.newParser(AST.JLS8);
-
 		parser.setResolveBindings(true);
 		parser.setBindingsRecovery(true);
 
@@ -50,12 +49,14 @@ public class CodeAnalyzer {
 	}
 
 	public CompilationUnit getCompilationUnit(String relativeFilePath) {
-
 		String absoluteFilePath = FileUtil.jointPath(sourcePath, relativeFilePath);
 		String source = FileUtil.read(absoluteFilePath, encoding);
 		parser.setSource(source.toCharArray());
 
+		parser.setUnitName(relativeFilePath);
+		
 		CompilationUnit compilationUnit = (CompilationUnit) parser.createAST(null);
+		
 		return compilationUnit;
 	}
 
@@ -68,6 +69,7 @@ public class CodeAnalyzer {
 		this.encoding = sourceEncoding;
 		parser.setEnvironment(new String[] { classPath }, new String[] { sourcePath }, new String[] { encoding },
 				false);
+
 	}
 
 	public void reportGlobalIssue(String message) {
