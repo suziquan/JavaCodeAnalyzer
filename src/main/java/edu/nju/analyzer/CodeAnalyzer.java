@@ -28,17 +28,14 @@ public class CodeAnalyzer {
 
 	private String sourcePath;
 
-	private String classPath;
-
 	private String encoding = "UTF-8";
 
 	private List<String> globalIssues = new ArrayList<>();
 
 	private Map<String, List<Issue>> issuesMap = new HashMap<String, List<Issue>>();
-	
+
 	public CodeAnalyzer() {
-		classPath = CodeAnalyzer.class.getClassLoader().getResource("lib/rt.jar").getPath();
-		
+
 		parser = ASTParser.newParser(AST.JLS8);
 		parser.setResolveBindings(true);
 		parser.setBindingsRecovery(true);
@@ -54,9 +51,9 @@ public class CodeAnalyzer {
 		parser.setSource(source.toCharArray());
 
 		parser.setUnitName(relativeFilePath);
-		
+
 		CompilationUnit compilationUnit = (CompilationUnit) parser.createAST(null);
-		
+
 		return compilationUnit;
 	}
 
@@ -67,8 +64,7 @@ public class CodeAnalyzer {
 	public void setSourcePath(String sourcePath, String sourceEncoding) {
 		this.sourcePath = sourcePath;
 		this.encoding = sourceEncoding;
-		parser.setEnvironment(new String[] { classPath }, new String[] { sourcePath }, new String[] { encoding },
-				false);
+		parser.setEnvironment(null, new String[] { sourcePath }, new String[] { encoding }, true);
 
 	}
 
@@ -118,17 +114,17 @@ public class CodeAnalyzer {
 			if (!reportFileName.endsWith(".html") || !reportFileName.endsWith(".htm")) {
 				reportFileName += ".html";
 			}
-			
+
 			File reportDir = new File(reportDirPath);
 			if (!reportDir.exists()) {
 				reportDir.mkdirs();
 			}
-			
+
 			File file = new File(FileUtil.jointPath(reportDirPath, reportFileName));
 			if (file.exists()) {
 				file.delete();
 			}
-			
+
 			file.createNewFile();
 
 			Template template = config.getTemplate("issue_report.ftl");
