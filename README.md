@@ -9,7 +9,7 @@
 			......
 			<repository>
 				<id>suziquan-maven-repo</id>
-				<url>https://raw.githubusercontent.com/suziquan/maven-repo/</url>
+				<url>https://raw.githubusercontent.com/suziquan/maven-repo/master/repository</url>
 			</repository>
 		</repositories>
 
