@@ -28,10 +28,11 @@
 这一步不是必须的，但可以在你编写代码时提供帮助。如果你使用的是Eclipse或IntelliJ IDEA，可以通过项目右键菜单"Maven"->"Download JavaDoc"和"Download Sources"下载JavaCodeAnalyzer及其依赖的类库的JavaDoc和源代码，这样在编写代码时可以通过IDE查看文档及实现。
 
 ###2 使用示例###
-建议先看后面的"[关于JDT](#jump)"一节，先对JDT有个大致的了解。
+建议先看后面的"<strong>关于JDT</strong>"一节，对JDT先有个大致的了解。
 ####2.0 被分析代码####
 源码目录为d:/demo/src，java文件的编码为"GBK"。Test.java在d:/demo/src/com/test目录下，其内容如下：
-<pre><code>package com.test;
+<pre><code>
+package com.test;
 
 import java.util.*;
 
@@ -49,7 +50,8 @@ public class Test{
 }</code></pre>
 ####2.1 不使用Visitor访问抽象语法树结点####
 例：打印所有方法名称。
-<pre><code>			CodeAnalyzer analyzer = new CodeAnalyzer();
+<pre><code>			
+		CodeAnalyzer analyzer = new CodeAnalyzer();
 		analyzer.setSourcePath("d:/demo/src", "GBK");
 		
 		CompilationUnit compilationUnit = analyzer.getCompilationUnit("com/test/Test.java");
@@ -66,7 +68,8 @@ public class Test{
 </code></pre>
 ####2.2 使用Visitor访问抽象语法树结点####
 例：打印所有方法名称。
-<pre><code>			CodeAnalyzer analyzer = new CodeAnalyzer();
+<pre><code>			
+		CodeAnalyzer analyzer = new CodeAnalyzer();
 		analyzer.setSourcePath("d:/demo/src", "GBK");
 		
 		CompilationUnit compilationUnit = analyzer.getCompilationUnit("com/test/Test.java");
@@ -83,7 +86,8 @@ public class Test{
 </code></pre>
 ####2.3 通过BindingResolve获得一个变量或方法所绑定的更多信息####
 例：打印出所有的方法调用，以及该方法在哪个类型中声明。
-<pre><code>			CodeAnalyzer analyzer = new CodeAnalyzer();
+<pre><code>			
+		CodeAnalyzer analyzer = new CodeAnalyzer();
 		analyzer.setSourcePath("d:/demo/src", "GBK");
 		
 		CompilationUnit compilationUnit = analyzer.getCompilationUnit("com/test/Test.java");
@@ -110,7 +114,8 @@ public class Test{
 		});
 </code></pre>
 ####2.4 生成报告####
-<pre><code>			final CodeAnalyzer analyzer = new CodeAnalyzer();
+<pre><code>			
+		final CodeAnalyzer analyzer = new CodeAnalyzer();
 		analyzer.setSourcePath("d:/demo/src", "GBK");
 		
 		final CompilationUnit compilationUnit = analyzer.getCompilationUnit("com/test/Test.java");
@@ -132,8 +137,8 @@ public class Test{
 		analyzer.generateIssueReport("d://demo/report", "report.html");
 </code></pre>
 生成的报告如下：
+<br/>
  <img src="/md-res/report.png"  style="border:1px solid #000"/>
-<span id = "jump"></span>
 ##关于JDT##
 ###1 JDT的使用###
 
