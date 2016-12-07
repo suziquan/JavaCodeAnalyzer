@@ -6,6 +6,7 @@
 ####1.1 在pom.xml中添加仓库####
 
 		<repositories>
+			......
 			<repository>
 				<id>suziquan-maven-repo</id>
 				<url>https://raw.githubusercontent.com/suziquan/maven-repo/</url>
@@ -13,18 +14,21 @@
 		</repositories>
 
 
-####1.2 添加依赖####
+####1.2 在pom.xml中添加依赖####
 
-		<dependency>
-			<groupId>edu.nju</groupId>
-			<artifactId>JavaCodeAnalyzer</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
+		<dependencies>
+			......
+			<dependency>
+				<groupId>edu.nju</groupId>
+				<artifactId>JavaCodeAnalyzer</artifactId>
+				<version>1.1.0-SNAPSHOT</version>
+			</dependency>
+		</dependencies>
 ####1.3 下载JavaDoc和源代码####
-这一步不是必须的，但可以在你编写代码时提供帮助。如果你使用的是Eclipse或IntelliJ IDEA，可以通过项目右键菜单"Maven"->"Download JavaDoc"和"Download Sources"下载JavaCodeAnalyzer及其依赖的类库的JavaDoc和源代码，这样在编写代码时可以通过IDE的提示看到类库的文档及其实现。
+这一步不是必须的，但可以在你编写代码时提供帮助。如果你使用的是Eclipse或IntelliJ IDEA，可以通过项目右键菜单"Maven"->"Download JavaDoc"和"Download Sources"下载JavaCodeAnalyzer及其依赖的类库的JavaDoc和源代码，这样在编写代码时可以通过IDE查看文档及实现。
 
 ###2 使用示例###
-
+建议先看后面的"[关于JDT](#jump)"一节，先对JDT有个大致的了解。
 ####2.0 被分析代码####
 源码目录为d:/demo/src，java文件的编码为"GBK"。Test.java在d:/demo/src/com/test目录下，其内容如下：
 <pre><code>package com.test;
@@ -43,9 +47,9 @@ public class Test{
 	}
 	
 }</code></pre>
-####2.1 基本使用####
+####2.1 不使用Visitor访问抽象语法树结点####
 例：打印所有方法名称。
-<pre><code>		CodeAnalyzer analyzer = new CodeAnalyzer();
+<pre><code>			CodeAnalyzer analyzer = new CodeAnalyzer();
 		analyzer.setSourcePath("d:/demo/src", "GBK");
 		
 		CompilationUnit compilationUnit = analyzer.getCompilationUnit("com/test/Test.java");
@@ -60,9 +64,9 @@ public class Test{
 			}
 		};
 </code></pre>
-####2.2 访问者模式####
+####2.2 使用Visitor访问抽象语法树结点####
 例：打印所有方法名称。
-<pre><code>		CodeAnalyzer analyzer = new CodeAnalyzer();
+<pre><code>			CodeAnalyzer analyzer = new CodeAnalyzer();
 		analyzer.setSourcePath("d:/demo/src", "GBK");
 		
 		CompilationUnit compilationUnit = analyzer.getCompilationUnit("com/test/Test.java");
@@ -77,10 +81,59 @@ public class Test{
 			
 		});
 </code></pre>
-####2.3 BindingResolve####
-例：打印出所有的方法调用，以及被调用者的类的全限定名。
-####2.4 生成报告####
+####2.3 通过BindingResolve获得一个变量或方法所绑定的更多信息####
+例：打印出所有的方法调用，以及该方法在哪个类型中声明。
+<pre><code>			CodeAnalyzer analyzer = new CodeAnalyzer();
+		analyzer.setSourcePath("d:/demo/src", "GBK");
+		
+		CompilationUnit compilationUnit = analyzer.getCompilationUnit("com/test/Test.java");
+		
+		compilationUnit.accept(new ASTVisitor() {
 
+			@Override
+			public boolean visit(MethodInvocation node) {
+				
+				String methodName = node.getName().toString();
+				System.out.print("方法"+methodName+"被调用。");
+
+				IMethodBinding methodBinding = node.resolveMethodBinding();
+				if (methodBinding != null) {
+					ITypeBinding declaringClass = methodBinding.getDeclaringClass();
+					String declaringClassQualifiedName = declaringClass.getQualifiedName();
+					System.out.print("这个方法在"+declaringClassQualifiedName+"中声明。");
+				}
+
+				System.out.println();				
+				return super.visit(node);
+			}
+			
+		});
+</code></pre>
+####2.4 生成报告####
+<pre><code>			final CodeAnalyzer analyzer = new CodeAnalyzer();
+		analyzer.setSourcePath("d:/demo/src", "GBK");
+		
+		final CompilationUnit compilationUnit = analyzer.getCompilationUnit("com/test/Test.java");
+		
+		compilationUnit.accept(new ASTVisitor() {
+
+			@Override
+			public boolean visit(MethodDeclaration node) {
+				analyzer.reportIssue("com/test/Test.java", compilationUnit, node,
+						"This issue is attached to MethodDeclaration.");
+				return super.visit(node);
+			}
+			
+		});
+		
+		analyzer.reportGlobalIssue("This is a global issue.This means it is not bound to a AST node.");
+		analyzer.reportGlobalIssue("This is a global issue, too.");
+		
+		analyzer.generateIssueReport("d://demo/report", "report.html");
+</code></pre>
+生成的报告如下：
+ <img src="/md-res/report.png"  style="border:1px solid #000"/>
+<span id = "jump"></span>
 ##关于JDT##
 ###1 JDT的使用###
 
@@ -99,7 +152,7 @@ Binding Resolve，所以我们可以看到代码中出现的类、方法等元�
 
 ![](/md-res/astview.png) 
 
-###4 参考资料 ###
+###4 更多资料 ###
 <a href="http://www.eclipse.org/articles/article.php?file=Article-JavaCodeManipulation_AST/index.html ">Abstract Syntax Tree</a>
 
 <a href="http://www.ibm.com/developerworks/cn/opensource/os-ast/index.html">探索Eclipse的ASTParser</a>

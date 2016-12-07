@@ -1,7 +1,10 @@
 package edu.nju.analyzer;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,6 +18,7 @@ import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 
 import edu.nju.util.FileUtil;
+import freemarker.cache.StringTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
@@ -104,14 +108,27 @@ public class CodeAnalyzer {
 		Configuration config = new Configuration(Configuration.VERSION_2_3_23);
 
 		try {
-			String templatesPath = CodeAnalyzer.class.getClassLoader().getResource("template").getPath();
 
-			config.setDirectoryForTemplateLoading(new File(templatesPath));
+			InputStream inputStream = CodeAnalyzer.class.getClassLoader()
+					.getResourceAsStream("template/issue_report.ftl");
+
+			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+
+			String content = "";
+			String line = null;
+			while ((line = bufferedReader.readLine()) != null) {
+				content += line + System.getProperty("line.separator");
+			}
+
+			StringTemplateLoader stringLoader = new StringTemplateLoader();
+			stringLoader.putTemplate("issue_report.ftl", content);
+			config.setTemplateLoader(stringLoader);
+
 			config.setDefaultEncoding("UTF-8");
 			config.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
 			config.setLogTemplateExceptions(true);
 
-			if (!reportFileName.endsWith(".html") || !reportFileName.endsWith(".htm")) {
+			if ((!reportFileName.endsWith(".html")) && (!reportFileName.endsWith(".htm"))) {
 				reportFileName += ".html";
 			}
 

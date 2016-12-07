@@ -35,6 +35,11 @@ public class Test {
 			}
 			
 		});
+		
+		analyzer.reportGlobalIssue("This is a global issue.");
+		analyzer.reportGlobalIssue("Global issue means that it is global and it is not bound to a AST node.");
+		
+		analyzer.generateIssueReport("d://demo/report", "report.html");
 	}
 
 }
