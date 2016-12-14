@@ -82,7 +82,15 @@ public class Project {
 				encodings.toArray(new String[0]), includeVMBootClassPath);
 
 		parser.setKind(ASTParser.K_COMPILATION_UNIT);
-		parser.setCompilerOptions(JavaCore.getOptions());
+		
+		Map<String,String> compilerOptions = JavaCore.getOptions();
+		
+		compilerOptions.put(JavaCore.COMPILER_COMPLIANCE, JavaCore.VERSION_1_8);
+		compilerOptions.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, JavaCore.VERSION_1_8);
+		compilerOptions.put(JavaCore.COMPILER_SOURCE, JavaCore.VERSION_1_8);
+		
+		parser.setCompilerOptions(compilerOptions);
+		
 		return parser;
 	}
 
