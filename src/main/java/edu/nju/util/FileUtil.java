@@ -5,7 +5,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
+import java.util.ArrayList;
+import java.util.List;
 
 public class FileUtil {
 
@@ -40,16 +41,16 @@ public class FileUtil {
 		return read(file);
 	}
 
-	public static String read(String filePath,String encoding) {
+	public static String read(String filePath, String encoding) {
 		File file = new File(filePath);
-		return read(file,encoding);
+		return read(file, encoding);
 	}
-	
-	public static String read(File file){
-		return read(file,"utf-8");
+
+	public static String read(File file) {
+		return read(file, "utf-8");
 	}
-	
-	public static String read(File file,String encoding) {
+
+	public static String read(File file, String encoding) {
 		String content = "";
 		BufferedReader bufferedReader = null;
 		try {
@@ -72,4 +73,29 @@ public class FileUtil {
 		return content;
 	}
 
+	public static List<File> findJavaFiles(String srcDirPath) {
+		List<File> result = new ArrayList<>();
+
+		findJavaFilesInDir(srcDirPath, result);
+
+		return result;
+
+	}
+
+	private static void findJavaFilesInDir(String srcDirPath, List<File> result) {
+		File file = new File(srcDirPath);
+		if (file.exists()) {
+			File[] files = file.listFiles();
+			for (File file2 : files) {
+				if (file2.isDirectory()) {
+					findJavaFilesInDir(file2.getAbsolutePath(), result);
+				} else {
+					String fileName = file2.getName();
+					if (fileName.endsWith(".java")) {
+						result.add(file2);
+					}
+				}
+			}
+		}
+	}
 }

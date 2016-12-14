@@ -1,3 +1,4 @@
+rm -frd d:/maven-repo/repository/edu/nju/JavaCodeAnalyzer
 git add -A
 git commit -m "modified"
 git push
