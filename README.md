@@ -42,7 +42,7 @@ Project类中包含了一些常用的方法，例如可以使用getMethodsIn( ty
 <pre><code>			
 		Project project = new ProjectBuilder().addSourcePath("d:/demo/src", "GBK").build();
 
-		List<MethodDeclaration> methodDeclarations = project.getMethodsIn("com.test.Test");
+		List&lt;MethodDeclaration&gt; methodDeclarations = project.getMethodsIn("com.test.Test");
 		methodDeclarations.forEach(e->System.out.println(e.getName()));
 </code></pre>
 方法2：
