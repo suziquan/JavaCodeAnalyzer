@@ -205,7 +205,14 @@ public class Project {
 	 * @return
 	 */
 	public TypeDeclaration findClassDelarationByQualifiedName(String qualifiedName) {
-		return (TypeDeclaration) qualifiedMame_Type_Map.get(qualifiedName);
+		AbstractTypeDeclaration abstractTypeDeclaration = qualifiedMame_Type_Map.get(qualifiedName);
+		if(abstractTypeDeclaration instanceof TypeDeclaration){
+			TypeDeclaration typeDeclaration = (TypeDeclaration)abstractTypeDeclaration;
+			if (!typeDeclaration.isInterface()) {
+				return typeDeclaration;
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -214,7 +221,14 @@ public class Project {
 	 * @return
 	 */
 	public TypeDeclaration findInterfaceDelarationByQualifiedName(String qualifiedName) {
-		return (TypeDeclaration) qualifiedMame_Type_Map.get(qualifiedName);
+		AbstractTypeDeclaration abstractTypeDeclaration = qualifiedMame_Type_Map.get(qualifiedName);
+		if(abstractTypeDeclaration instanceof TypeDeclaration){
+			TypeDeclaration typeDeclaration = (TypeDeclaration)abstractTypeDeclaration;
+			if (typeDeclaration.isInterface()) {
+				return typeDeclaration;
+			}
+		}
+		return null;
 	}
 
 	/**
