@@ -1,4 +1,4 @@
-# JavaCodeAnalyzer
+# JavaCodeAnalyzer ![Build Status](https://travis-ci.org/SuZiquan/JavaCodeAnalyzer.svg?branch=master)
 ##简介
 一个使用JDT（Eclipse Java Development Tools）分析Java代码的工具。
 ##使用JavaCodeAnalyzer
