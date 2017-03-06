@@ -19,7 +19,7 @@
 	  	<dependency>
 	  		<groupId>edu.nju.suziquan</groupId>
 	  		<artifactId>JavaCodeAnalyzer</artifactId>
-	  		<version>1.0.1-RELEASE</version>
+	  		<version>1.0.3</version>
 	  	</dependency>
 	  </dependencies>
 	  
