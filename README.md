@@ -1,15 +1,28 @@
-# JavaCodeAnalyzer ![Build Status](https://travis-ci.org/SuZiquan/JavaCodeAnalyzer.svg?branch=master)
+# JavaCodeAnalyzer [![Build Status](https://travis-ci.org/SuZiquan/JavaCodeAnalyzer.svg?branch=master)](https://travis-ci.org/SuZiquan/JavaCodeAnalyzer)
 ##简介
 一个使用JDT（Eclipse Java Development Tools）分析Java代码的工具。
 ##使用JavaCodeAnalyzer
-###1 在Maven项目中的pom.xml中添加依赖
+
+####1.1 在pom.xml中添加仓库####
+
+		<repositories>
+			......
+			<repository>
+				<id>suziquan-maven-repo</id>
+				<url>https://raw.githubusercontent.com/suziquan/maven-repo/master/repository</url>
+			</repository>
+		</repositories>
+
+####1.2 在pom.xml中添加依赖  
+
 	  <dependencies>
 	  	<dependency>
-	  		<groupId>com.github.suziquan</groupId>
+	  		<groupId>edu.nju.suziquan</groupId>
 	  		<artifactId>JavaCodeAnalyzer</artifactId>
 	  		<version>1.0.1-RELEASE</version>
 	  	</dependency>
 	  </dependencies>
+	  
 如果你使用的是Eclipse或IntelliJ IDEA，可以通过项目右键菜单"Maven"->"Download JavaDoc"和"Download Sources"下载JavaCodeAnalyzer及其依赖的类库的JavaDoc和源代码，这样在编写代码时可以通过IDE查看文档及实现。
 
 ###2 使用示例
