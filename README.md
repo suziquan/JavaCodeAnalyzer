@@ -3,7 +3,7 @@
 一个使用JDT（Eclipse Java Development Tools）分析Java代码的工具。
 ## 使用JavaCodeAnalyzer
 
-#### 1.1 在pom.xml中添加仓库####
+#### 1.1 在pom.xml中添加仓库
 
 		<repositories>
 			......
@@ -49,7 +49,7 @@ public class Test{
 #### 2.1 不使用Visitor访问抽象语法树结点
 例：打印所有方法名称。
 
-方法1：
+**方法1：**
 
 Project类中包含了一些常用的方法，例如可以使用getMethodsIn( typeQualifiedName )获取指定类型中的所有方法。
 <pre><code>			
@@ -58,7 +58,7 @@ Project类中包含了一些常用的方法，例如可以使用getMethodsIn( ty
 		List&lt;MethodDeclaration&gt; methodDeclarations = project.getMethodsIn("com.test.Test");
 		methodDeclarations.forEach(e->System.out.println(e.getName()));
 </code></pre>
-方法2：
+**方法2：**
 <pre><code>			
 		Project project = new ProjectBuilder().addSourcePath("d:/demo/src", "GBK").build();
 
