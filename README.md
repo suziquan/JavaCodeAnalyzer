@@ -1,5 +1,5 @@
-# JavaCodeAnalyzer [![Build Status](https://travis-ci.org/SuZiquan/JavaCodeAnalyzer.svg?branch=master)](https://travis-ci.org/SuZiquan/JavaCodeAnalyzer)
-##简介
+# JavaCodeAnalyzer [![Build Status](https://travis-ci.org/SuZiquan/JavaCodeAnalyzer.svg?branch=master)](https://travis-ci.org/SuZiquan/JavaCodeAnalyzer)  
+## 简介  
 一个使用JDT（Eclipse Java Development Tools）分析Java代码的工具。
 ## 使用JavaCodeAnalyzer
 
